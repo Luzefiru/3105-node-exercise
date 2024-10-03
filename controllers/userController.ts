@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import Joi from 'joi';
-import { userModel } from '../models/userModel';
+import { userModel, UserWithoutSensitiveInfo } from '../models/userModel';
 
 export function register(req: Request, res: Response) {
   const inputSchema = Joi.object({
@@ -30,9 +30,22 @@ export function register(req: Request, res: Response) {
   });
 }
 
-export function profile(req: Request, res: Response) {
+export function profile(_: Request, res: Response) {
+  const foundUser = userModel.getUserById(
+    (res.locals.decodedToken as UserWithoutSensitiveInfo).id
+  );
+
+  if (!foundUser) {
+    return res.status(404).json({ msg: 'User with that id not found' });
+  }
+
+  return res.json({ msg: 'Successfully found user', data: foundUser });
+}
+
+export function login(req: Request, res: Response) {
   const inputSchema = Joi.object({
-    id: Joi.number().integer().min(1).required(),
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
   });
 
   const { error, value } = inputSchema.validate(req.body);
@@ -41,11 +54,16 @@ export function profile(req: Request, res: Response) {
     return res.status(400).json({ msg: error.message });
   }
 
-  const foundUser = userModel.getUserById(value.id);
+  const result = userModel.loginUser(value.username, value.password);
 
-  if (!foundUser) {
-    return res.status(404).json({ msg: 'User with that id not found' });
+  if (!result.success) {
+    return res.status(401).json({ msg: 'Invalid login credentials' });
   }
 
-  return res.json({ msg: 'Successfully found user', data: foundUser });
+  return res.json({
+    msg: 'Successfully logged in',
+    data: {
+      token: result.token,
+    },
+  });
 }

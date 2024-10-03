@@ -16,6 +16,7 @@
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2"
   }
