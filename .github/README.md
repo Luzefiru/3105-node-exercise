@@ -2,6 +2,8 @@
 
 A basic backend application using Node.js and Express.js for my 3105 class.
 
+[Click here to view Project Specifications](https://github.com/Luzefiru/3105-node-exercise/blob/main/.github/SPEC.md)
+
 ## Setup
 
 ```bash
