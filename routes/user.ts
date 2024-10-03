@@ -5,9 +5,6 @@ import { authMiddleware } from '../middleware/authMiddleware';
 const userRouter = express.Router();
 userRouter.post('/register', register);
 userRouter.post('/login', login);
-
-/* Protected Routes */
-userRouter.use(authMiddleware);
-userRouter.get('/profile', profile);
+userRouter.get('/profile', authMiddleware, profile);
 
 export { userRouter };

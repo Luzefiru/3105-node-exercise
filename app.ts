@@ -11,7 +11,7 @@ app.use(loggerMiddleware);
 app.use(bodyParser.json());
 
 /* Routes */
-app.use('/user', userRouter);
+app.use('/', userRouter);
 
 app.listen(env.PORT, () => {
   console.log(`🚀 Server started on port: ${env.PORT}`);
