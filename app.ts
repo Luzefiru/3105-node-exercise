@@ -1,6 +1,10 @@
 import express from 'express';
+import { loggerMiddleware } from './middleware/loggerMiddleware';
 
 const app = express();
+
+/* Global Middleware */
+app.use(loggerMiddleware);
 
 app.get('/', (_, res) => {
   return res.json({ hello: 'world' });
