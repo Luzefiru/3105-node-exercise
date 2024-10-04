@@ -13,6 +13,21 @@ npm i
 npm run dev
 ```
 
+### Configuration
+
+> [!TIP]
+> Feel free to change the following configration values to play around with the behavior.
+
+```ts
+// config/env.ts
+export const env = {
+  JWT_SECRET: process.env.JWT_SECRET || 'secret',
+  PORT: process.env.PORT || 3000,
+  RATE_LIMIT_MAX_REQUESTS: Number(process.env.MAX_REQUESTS) || 5,
+  RATE_LIMIT_WINDOW_MS: Number(process.env.RATE_LIMIT_WINDOW_MS) || 30 * 1000, // 30 seconds
+};
+```
+
 ## Testing
 
 ```bash
