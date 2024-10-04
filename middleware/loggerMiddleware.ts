@@ -5,9 +5,9 @@ export function loggerMiddleware(
   _: Response,
   next: NextFunction
 ) {
-  const now = new Date().toISOString();
+  const currentTime = new Date().toISOString();
   const httpMethod = req.method;
   const path = req.originalUrl;
-  console.log(`[${now}] ${httpMethod} ${path}`);
+  console.log(`[${currentTime}] ${httpMethod} ${path}`);
   next();
 }
