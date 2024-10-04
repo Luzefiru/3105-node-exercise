@@ -25,7 +25,7 @@ export function register(req: Request, res: Response) {
   );
 
   return res.json({
-    msg: 'Successfully registered new user',
+    msg: 'Your account was successfully registered.',
     data: createdUser,
   });
 }
@@ -36,7 +36,9 @@ export function profile(_: Request, res: Response) {
   );
 
   if (!foundUser) {
-    return res.status(404).json({ msg: 'User with that id not found' });
+    return res
+      .status(404)
+      .json({ msg: 'No user account was found with that ID.' });
   }
 
   return res.json({ msg: 'Successfully found user', data: foundUser });
@@ -57,11 +59,11 @@ export function login(req: Request, res: Response) {
   const result = userModel.loginUser(value.username, value.password);
 
   if (!result.success) {
-    return res.status(401).json({ msg: 'Invalid login credentials' });
+    return res.status(401).json({ msg: 'Invalid username or password.' });
   }
 
   return res.json({
-    msg: 'Successfully logged in',
+    msg: 'You have successfully logged in.',
     data: {
       token: result.token,
     },

@@ -28,7 +28,9 @@ export function rateLimitMiddleware(
   requestCounts[clientIp] = { count, startTime };
 
   if (count > MAX_REQUESTS) {
-    return res.status(429).json({ msg: 'Too many requests' });
+    return res
+      .status(429)
+      .json({ msg: 'Too many requests. Please try again later.' });
   }
 
   next();

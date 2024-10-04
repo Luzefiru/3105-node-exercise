@@ -16,10 +16,10 @@ export function authMiddleware(
         env.JWT_SECRET
       );
     } catch {
-      return res.status(401).json({ msg: 'Auth token invalid' });
+      return res.status(401).json({ msg: 'Your auth token is invalid.' });
     }
   } else {
-    return res.status(401).json({ msg: 'Auth token missing' });
+    return res.status(401).json({ msg: 'Your auth token is missing.' });
   }
   next();
 }
