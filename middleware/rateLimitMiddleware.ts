@@ -1,7 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-
-const MAX_REQUESTS = 5; // 5 requests
-const RATE_LIMIT_WINDOW_MS = 30 * 1000; // 30 seconds
+import { env } from '../config/env';
 
 const requestCounts: Record<string, { count: number; startTime: number }> = {};
 
@@ -27,7 +25,7 @@ export function rateLimitMiddleware(
 
   requestCounts[clientIp] = { count, startTime };
 
-  if (count > MAX_REQUESTS) {
+  if (count > env.MAX_REQUESTS) {
     return res
       .status(429)
       .json({ msg: 'Too many requests. Please try again later.' });
@@ -43,5 +41,5 @@ export function rateLimitMiddleware(
  * @returns
  */
 function isWindowExpired(startTime: number, currentTime: number) {
-  return currentTime - startTime > RATE_LIMIT_WINDOW_MS;
+  return currentTime - startTime > env.RATE_LIMIT_WINDOW_MS;
 }
